@@ -37,4 +37,12 @@ function calcular() {
     document.getElementById("resultado").innerHTML = texto;
 }
 
+function keyboardShortcut(event) {
+  if (event.key === 'Enter') {
+    calcular();
+  }
+}
+
 btnCalcular.addEventListener('click', calcular);
+
+document.addEventListener('keydown', keyboardShortcut);
