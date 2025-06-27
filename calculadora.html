@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de SLA - Mercado Livre</title>
+  <link rel="icon" type="image/x-icon" href="ChatGPT Image 22 de mai. de 2025, 18_16_18 (1).png">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #002c5f;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 44, 95, 0.2);
+      text-align: center;
+    }
+
+    .logo {
+      width: 160px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #002c5f;
+    }
+
+    input {
+      width: 60%;
+      max-width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 0 auto 20px;
+      border: 2px solid #002c5f;
+      border-radius: 8px;
+      display: block;
+      text-align: center;
+    }
+
+    button {
+      background-color: #ffe600;
+      color: #002c5f;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #ffea33;
+    }
+
+    .result {
+      margin-top: 25px;
+      background-color: #e6f0ff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #002c5f;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img class="logo" src="ChatGPT Image 22 de mai. de 2025, 18_16_18 (1).png" alt="Logo Mercado Livre">
+    <h2>Calculadora de SLA</h2>
+
+    <input type="number" id="total" placeholder="Digite o total de pedidos (ex: 1500)" />
+    <input type="number" id="shippados" placeholder="Digite quantos foram shippados (ex: 1492)" />
+
+    <button onclick="calcular()">Calcular Limites</button>
+
+    <div class="result" id="resultado"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const total = parseInt(document.getElementById("total").value);
+      const shippados = parseInt(document.getElementById("shippados").value);
+
+      if (isNaN(total) || total <= 0) {
+        document.getElementById("resultado").innerHTML = "<span class='highlight'>Insira um número válido de pedidos totais.</span>";
+        return;
+      }
+
+      const maxErros997 = Math.floor(total * (1 - 0.997));
+      const maxErros995 = Math.floor(total * (1 - 0.995));
+
+      const expedir997 = total - maxErros997;
+      const expedir995 = total - maxErros995;
+
+      let texto = `
+        <p><strong>Para atingir:</strong></p>
+        <p>✅ <span class="highlight">99,70%</span>: Expedir pelo menos <span class="highlight">${expedir997}</span> pedidos</p>
+        <p>❌ Pode atrasar até <span class="highlight">${maxErros997}</span> pedidos</p>
+        <hr>
+        <p>✅ <span class="highlight">99,50%</span>: Expedir pelo menos <span class="highlight">${expedir995}</span> pedidos</p>
+        <p>❌ Pode atrasar até <span class="highlight">${maxErros995}</span> pedidos</p>
+      `;
+
+      // Verifica se o valor de shippados é válido para calcular a % real
+      if (!isNaN(shippados) && shippados >= 0 && shippados <= total) {
+        const percentual = ((shippados / total) * 100).toFixed(2);
+        texto += `
+          <hr>
+          <p>📦 <strong>SLA Real:</strong> Você shippou <span class="highlight">${shippados}</span> de ${total} pedidos</p>
+          <p>✅ SLA alcançado: <span class="highlight">${percentual}%</span></p>
+        `;
+      }
+
+      document.getElementById("resultado").innerHTML = texto;
+    }
+  </script>
+
+</body>
+</html>
